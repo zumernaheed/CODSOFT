@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basic Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .calculator {
+        width: 300px;
+        margin: 0 auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #f9f9f9;
+    }
+
+    .calculator-screen {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 50px;
+        text-align: right;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .calculator-keys {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 5px;
+    }
+
+    .calculator-keys button {
+        padding: 10px;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #fff;
+        transition: background-color 0.3s ease;
+    }
+
+    .calculator-keys button:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="calculator-screen" id="output">0</div>
+    <div class="calculator-keys">
+        <button id="clear">C</button>
+        <button id="backspace">←</button>
+        <button id="divide">/</button>
+        <button id="multiply">*</button>
+        <button id="seven">7</button>
+        <button id="eight">8</button>
+        <button id="nine">9</button>
+        <button id="subtract">-</button>
+        <button id="four">4</button>
+        <button id="five">5</button>
+        <button id="six">6</button>
+        <button id="add">+</button>
+        <button id="one">1</button>
+        <button id="two">2</button>
+        <button id="three">3</button>
+        <button id="equals" style="grid-column: span 2;">=</button>
+        <button id="zero">0</button>
+        <button id="decimal">.</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const output = document.getElementById('output');
+        const clear = document.getElementById('clear');
+        const backspace = document.getElementById('backspace');
+        const divide = document.getElementById('divide');
+        const multiply = document.getElementById('multiply');
+        const subtract = document.getElementById('subtract');
+        const add = document.getElementById('add');
+        const equals = document.getElementById('equals');
+        const decimal = document.getElementById('decimal');
+
+        document.querySelectorAll('.calculator-keys button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (output.textContent === '0' && button.textContent !== '.' || output.textContent === 'Error') {
+                    output.textContent = '';
+                }
+
+                if (button.textContent === '=') {
+                    try {
+                        output.textContent = eval(output.textContent);
+                    } catch (error) {
+                        output.textContent = 'Error';
+                    }
+                } else if (button.textContent === 'C') {
+                    output.textContent = '0';
+                } else if (button.textContent === '←') {
+                    output.textContent = output.textContent.slice(0, -1);
+                    if (output.textContent === '') {
+                        output.textContent = '0';
+                    }
+                } else {
+                    output.textContent += button.textContent;
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
